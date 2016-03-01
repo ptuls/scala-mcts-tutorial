@@ -19,9 +19,7 @@ object UCT  {
             
             // Step (1) - Selection phase of MCTS
             // ------------------------------------------------------
-            var isNodeWithoutUntriedActions : Boolean = false;   // Implement me
-            var isNodeAParent : Boolean = false;                 // Implement me
-            while (isNodeWithoutUntriedActions && isNodeAParent) {
+            while (node.untriedActions.isEmpty && node.children.nonEmpty) {
                 // Node has no unexplored actions and node has children nodes.
                 node = node.selectChild
                 state.doAction(node.action)
@@ -30,19 +28,21 @@ object UCT  {
             // Step (2) Expansion phase of MCTS
             // -------------------------------------------------------
             if (node.untriedActions.nonEmpty) {
-                // TODO: Implement the following three steps
                 // First, choose a random action from list of untried actions of the node
                 // Second, apply it to the state.
                 // Third, record this action and the resultant state as a child of the node.
+                val action : Int = node.untriedActions.toList(Random.nextInt(node.untriedActions.size))
+                state.doAction(action)
+                node.addChild(action, state)
             }
 
             // Step (3) - Simulation phase of MCTS
             // -------------------------------------------------------
-            var isStateTerminal : Boolean = false;
             while (state.getAvailableActions.nonEmpty) {
-                // TODO: Implement the following two steps
                 // First, choose a random action from list of available actions of the state
                 // Second,apply it to the state.
+                var action : Int = state.getAvailableActions.toList(Random.nextInt(state.getAvailableActions.size))
+                state.doAction(action)
             }
 
             // Step (4) - Backpropagation phase of MCTS

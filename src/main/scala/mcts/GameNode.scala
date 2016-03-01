@@ -16,15 +16,18 @@ case class GameNode(action : Int = -1, parent : GameNode = null, state : GameSta
 
     def selectChild : GameNode = {
         
-        // TODO: Task 1 -- Implement the tree policy.
-        // 
         // The tree policy is based on the UCT formula.
         // Given the current GameNode, calculate the 
         // UCT values for each of them and return 
         // the child with the highest value.
         // --------------------------------------------
         
-        return null;
+        val sortedChildren = children.map( node => (node,
+            (node.numberOfWins.toDouble/node.numberOfVisits) +
+                Math.sqrt(2 * Math.log(numberOfVisits+1) / (node.numberOfVisits+epsilon))
+        )).sortBy(_._2)
+
+        return sortedChildren.last._1
     }
 
     // -- Methods below deal with updating this node during the search.
