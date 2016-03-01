@@ -8,7 +8,16 @@ import scala.util.Random
   */
 object Main extends App{
 
-    var state = new HexState(7, 7)
+    // Choose a game, or leave at default.
+    // -----------------------------------
+    // Default to the OXO game.
+    var state = new OXOState
+
+    // Uncomment for a 7 x 7 Hex Board
+    // var state = new HexState(7, 7)
+    
+    // -- 
+
     while (state.getAvailableActions.nonEmpty) {
 
         println(s"Player ${state.totalNumberOfPlayers+1 - state.getLastPlayerWhoMoved}'s turn.")
@@ -17,12 +26,11 @@ object Main extends App{
         var action : Int = -1;
         if (state.getLastPlayerWhoMoved == 1) {
             // Now it is player 2's turn.
-            action = UCT.search(state, 200, false)
+            action = UCT.search(state, 500, false)
         }
         else {
             // Now it is player 1's turn.
-//            action = state.getAvailableActions.toList(Random.nextInt(state.getAvailableActions.size))
-            action = UCT.search(state, 200, false)
+            action = UCT.search(state, 500, false)
         }
 
         println(s"Player ${state.totalNumberOfPlayers+1 - state.getLastPlayerWhoMoved}'s best action is ${action}")

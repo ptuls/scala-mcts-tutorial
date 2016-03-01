@@ -16,7 +16,7 @@ case class GameNode(action : Int = -1, parent : GameNode = null, state : GameSta
 
     def selectChild : GameNode = {
         
-        // TODO: Task 1 -- Implement the tree policy.
+        // TODO: Task 3 -- Implement the tree policy.
         // 
         // The tree policy is based on the UCT formula.
         // Given the current GameNode, calculate the 

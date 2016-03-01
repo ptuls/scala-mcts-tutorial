@@ -17,7 +17,7 @@ object UCT  {
             state = rootState.getCopy
             
             
-            // Step (1) - Selection phase of MCTS
+            // SELECTION phase of MCTS
             // ------------------------------------------------------
             while (isNodeWithoutUntriedActions && isNodeAParent) {
                 // Node has no unexplored actions and node has children nodes.
@@ -25,24 +25,24 @@ object UCT  {
                 state.doAction(node.action)
             }
 
-            // Step (2) Expansion phase of MCTS
+            // EXPANSION phase of MCTS
             // -------------------------------------------------------
             if (node.untriedActions.nonEmpty) {
-                // TODO: Implement the following three steps
+                // TODO: Task (1) Implement the following three steps
                 // First, choose a random action from list of untried actions of the node
                 // Second, apply it to the state.
                 // Third, record this action and the resultant state as a child of the node.
             }
 
-            // Step (3) - Simulation phase of MCTS
+            // SIMULATION phase of MCTS
             // -------------------------------------------------------
             while (state.getAvailableActions.nonEmpty) {
-                // TODO: Implement the following two steps
+                // TODO: Task (2) Implement the following two steps
                 // First, choose a random action from list of available actions of the state
                 // Second,apply it to the state.
             }
 
-            // Step (4) - Backpropagation phase of MCTS
+            // BACKPROPAGATION phase of MCTS
             // ------------------------------------------------------------
             while (node != null) {
                 node.update(state.getResult(node.playerIndex))
