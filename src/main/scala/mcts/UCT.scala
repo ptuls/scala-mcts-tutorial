@@ -19,8 +19,6 @@ object UCT  {
             
             // Step (1) - Selection phase of MCTS
             // ------------------------------------------------------
-            var isNodeWithoutUntriedActions : Boolean = false;   // Implement me
-            var isNodeAParent : Boolean = false;                 // Implement me
             while (isNodeWithoutUntriedActions && isNodeAParent) {
                 // Node has no unexplored actions and node has children nodes.
                 node = node.selectChild
@@ -38,7 +36,6 @@ object UCT  {
 
             // Step (3) - Simulation phase of MCTS
             // -------------------------------------------------------
-            var isStateTerminal : Boolean = false;
             while (state.getAvailableActions.nonEmpty) {
                 // TODO: Implement the following two steps
                 // First, choose a random action from list of available actions of the state
