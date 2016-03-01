@@ -15,6 +15,8 @@ case class GameNode(action : Int = -1, parent : GameNode = null, state : GameSta
     val epsilon : Double = 1e-6
 
     def selectChild : GameNode = {
+
+        val twoCp = 1/Math.sqrt(2);
         
         // TODO: Task 3 -- Implement the tree policy.
         // 
