@@ -22,15 +22,14 @@ case class GameNode(action: Int = -1,
     // UCT values for each of them and return
     // the child with the highest value.
     // --------------------------------------------
-    val sortedChildren = children
+    val exploreParam = 1 / Math.sqrt(2)
+    val childValues = children
       .map { node =>
         (node,
-         node.numberOfWins / node.numberOfVisits + Math.sqrt(
+         node.numberOfWins / node.numberOfVisits + exploreParam * Math.sqrt(
            2 * Math.log(numberOfVisits + 1) / (node.numberOfVisits + epsilon)))
       }
-      .sortBy(_._2)
-
-    sortedChildren.maxBy(_._2)._1
+    childValues.maxBy(_._2)._1
   }
 
   // -- Methods below deal with updating this node during the search.
@@ -49,7 +48,7 @@ case class GameNode(action: Int = -1,
 
   // -- Methods below deal with printing.
 
-  override def toString(): String = {
+  override def toString: String = {
     s"[A: $action; " +
       s"W/V: $numberOfWins/$numberOfVisits = ${numberOfWins / numberOfVisits.toDouble}; " +
       s"U: $untriedActions"
@@ -78,5 +77,4 @@ case class GameNode(action: Int = -1,
     }
     s
   }
-
 }
