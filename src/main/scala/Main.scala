@@ -6,48 +6,47 @@ import scala.util.Random
 /**
   * Created by culim on 2/24/16.
   */
-object Main extends App{
+object Main extends App {
 
-    // Choose a game, or leave at default.
-    // -----------------------------------
-    // Default to the OXO game.
-    var state = new OXOState
+  // Choose a game, or leave at default.
+  // -----------------------------------
+  // Default to the OXO game.
+  var state = new OXOState
 
-    // Uncomment for a 7 x 7 Hex Board
-    // var state = new HexState(7, 7)
-    
-    // -- 
+  // Uncomment for a 7 x 7 Hex Board
+  // var state = new HexState(7, 7)
 
-    while (state.getAvailableActions.nonEmpty) {
+  // --
 
-        println(s"Player ${state.totalNumberOfPlayers+1 - state.getLastPlayerWhoMoved}'s turn.")
-        println(state.toString)
+  while (state.getAvailableActions.nonEmpty) {
 
-        var action : Int = -1;
-        if (state.getLastPlayerWhoMoved == 1) {
-            // Now it is player 2's turn.
-            action = UCT.search(state, 500, false)
-        }
-        else {
-            // Now it is player 1's turn.
-            action = UCT.search(state, 500, false)
-        }
-
-        println(s"Player ${state.totalNumberOfPlayers+1 - state.getLastPlayerWhoMoved}'s best action is ${action}")
-        println()
-        state.doAction(action)
-
-    }
-
+    println(
+      s"Player ${state.totalNumberOfPlayers + 1 - state.getLastPlayerWhoMoved}'s turn.")
     println(state.toString)
 
-    if (state.getResult(state.lastPlayerWhoMoved) == 1.0) {
-        println(s"Aha! Player ${state.lastPlayerWhoMoved} wins!")
+    var action: Int = -1
+    if (state.getLastPlayerWhoMoved == 1) {
+      // Now it is player 2's turn.
+      action = UCT.search(state, 500)
+    } else {
+      // Now it is player 1's turn.
+      action = UCT.search(state, 500)
     }
-    else if (state.getResult(state.lastPlayerWhoMoved) == 0.0) {
-        println(s"Hmm, Player ${state.totalNumberOfPlayers+1 - state.lastPlayerWhoMoved} wins!")
-    }
-    else {
-        println(s"It's a draw!")
-    }
+
+    println(
+      s"Player ${state.totalNumberOfPlayers + 1 - state.getLastPlayerWhoMoved}'s best action is $action")
+    println()
+    state.doAction(action)
+
+  }
+
+  println(state.toString)
+
+  state.getResult(state.lastPlayerWhoMoved) match {
+    case 1.0 => println(s"Aha! Player ${state.lastPlayerWhoMoved} wins!")
+    case 0.0 =>
+      println(
+        s"Hmm, Player ${state.totalNumberOfPlayers + 1 - state.lastPlayerWhoMoved} wins!")
+    case _ => println(s"It's a draw!")
+  }
 }

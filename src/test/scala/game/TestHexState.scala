@@ -10,16 +10,16 @@ import scala.util.Random
 class TestHexState extends FunSuite{
 
     test("A newly created HexState should just have a non-empty board.") {
-        var nRows : Int = 11;
-        var nColumns : Int = 11;
+        var nRows : Int = 11
+        var nColumns : Int = 11
         val state : HexState = new HexState(nRows, nColumns)
 
         assert(state.board.length == nRows * nColumns)
     }
 
     test("A 5 x 5 board where player 1 picks (0,a) should be valid.") {
-        var nRows : Int = 5;
-        var nColumns : Int = 5;
+        var nRows : Int = 5
+        var nColumns : Int = 5
         val state : HexState = new HexState(nRows, nColumns)
 
         var gridIndex : Int = 0
@@ -29,8 +29,8 @@ class TestHexState extends FunSuite{
     }
 
     test("A 5 x 5 board where player 1 picks (0,a) and player 2 picks (0, b) should be valid.") {
-        var nRows : Int = 5;
-        var nColumns : Int = 5;
+        var nRows : Int = 5
+        var nColumns : Int = 5
         val state : HexState = new HexState(nRows, nColumns)
 
         var gridIndex : Int = 0
@@ -42,8 +42,8 @@ class TestHexState extends FunSuite{
     }
 
     test("P1 and P2 alternate across 5 turns should reduce #available_actions.") {
-        var nRows : Int = 5;
-        var nColumns : Int = 5;
+        var nRows : Int = 5
+        var nColumns : Int = 5
         val state : HexState = new HexState(nRows, nColumns)
 
 
@@ -56,14 +56,13 @@ class TestHexState extends FunSuite{
 
         }
 
-
         assert(state.getAvailableActions.size == nRows*nColumns - nTurns*state.totalNumberOfPlayers)
 
     }
 
     test("P1 in winning configuration has won should be detected.") {
-        var nRows : Int = 5;
-        var nColumns : Int = 5;
+        var nRows : Int = 5
+        var nColumns : Int = 5
         var state : HexState = new HexState(nRows, nColumns)
 
         state.board = Array(
@@ -82,9 +81,9 @@ class TestHexState extends FunSuite{
     }
 
     test("P2 in winning configuration has won should be detected.") {
-        var nRows : Int = 5;
-        var nColumns : Int = 5;
-        var state : HexState = new HexState(nRows, nColumns)
+        var nRows : Int = 5
+        var nColumns : Int = 5
+        var state : HexState = HexState(nRows, nColumns)
 
         state.board = Array(
             1, 0, 2, 0, 2,
@@ -102,9 +101,9 @@ class TestHexState extends FunSuite{
     }
 
     test("P2 in making final move on 7x7 board should not result in a win.") {
-        var nRows : Int = 7;
-        var nColumns : Int = 7;
-        var state : HexState = new HexState(nRows, nColumns)
+        var nRows : Int = 7
+        var nColumns : Int = 7
+        var state : HexState = HexState(nRows, nColumns)
 
         state.board = Array(
             1, 1, 1, 1, 2, 2, 1,

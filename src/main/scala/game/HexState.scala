@@ -26,7 +26,7 @@ case class HexState(var nRows: Int, var nColumns: Int) extends GameState {
   buildGraph
 
   override def getCopy: GameState = {
-    val s: HexState = new HexState(nRows, nColumns)
+    val s: HexState = HexState(nRows, nColumns)
     s.lastPlayerWhoMoved = lastPlayerWhoMoved
     s.totalNumberOfPlayers = totalNumberOfPlayers
     s.board = board.clone()
@@ -42,7 +42,7 @@ case class HexState(var nRows: Int, var nColumns: Int) extends GameState {
     allNodes = Set.empty
     for (row <- 0 to nRows - 1) {
       for (col <- 0 to nColumns - 1) {
-        var node = new BFSNode(row * nColumns + col)
+        var node = BFSNode(row * nColumns + col)
         allNodes += node
         nodeMap(row * nColumns + col) = node
       }
