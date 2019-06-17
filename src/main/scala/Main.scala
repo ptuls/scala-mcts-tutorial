@@ -1,5 +1,5 @@
 import game.{HexState, OXOState}
-import mcts.UCT
+import mcts.{Thompson, UCT}
 
 import scala.util.Random
 
@@ -11,10 +11,10 @@ object Main extends App {
   // Choose a game, or leave at default.
   // -----------------------------------
   // Default to the OXO game.
-  var state = new OXOState
+//  var state = new OXOState
 
   // Uncomment for a 7 x 7 Hex Board
-  // var state = new HexState(7, 7)
+   var state = HexState(7, 7)
 
   // --
 
@@ -27,7 +27,7 @@ object Main extends App {
     var action: Int = -1
     if (state.getLastPlayerWhoMoved == 1) {
       // Now it is player 2's turn.
-      action = UCT.search(state, 500)
+      action = Thompson.search(state, maxIterations = 500)
     } else {
       // Now it is player 1's turn.
       action = UCT.search(state, 500)
@@ -37,7 +37,6 @@ object Main extends App {
       s"Player ${state.totalNumberOfPlayers + 1 - state.getLastPlayerWhoMoved}'s best action is $action")
     println()
     state.doAction(action)
-
   }
 
   println(state.toString)

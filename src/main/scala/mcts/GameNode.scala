@@ -1,5 +1,6 @@
 package mcts
 
+import breeze.stats.distributions.Beta
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -16,7 +17,7 @@ case class GameNode(action: Int = -1,
   var playerIndex: Int = state.getLastPlayerWhoMoved
   val epsilon: Double = 1e-6
 
-  def selectChild: GameNode = {
+  def selectChild(thompsonSample: Boolean = false): GameNode = {
     // The tree policy is based on the UCT formula.
     // Given the current GameNode, calculate the
     // UCT values for each of them and return
@@ -25,10 +26,19 @@ case class GameNode(action: Int = -1,
     val exploreParam = 1 / Math.sqrt(2)
     val childValues = children
       .map { node =>
-        (node,
-         node.numberOfWins / node.numberOfVisits + exploreParam * Math.sqrt(
-           2 * Math.log(numberOfVisits + 1) / (node.numberOfVisits + epsilon)))
+        val score = if (thompsonSample) {
+          val dist = new Beta(node.numberOfWins + 1.0,
+                              node.numberOfVisits - node.numberOfWins + 1.0)
+          dist.draw()
+        } else {
+          node.numberOfWins / node.numberOfVisits + exploreParam * Math.sqrt(
+            2 * Math.log(numberOfVisits + 1) / (node.numberOfVisits + epsilon))
+        }
+
+        (node, score)
       }
+
+    // deterministic choice
     childValues.maxBy(_._2)._1
   }
 

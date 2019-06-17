@@ -2,23 +2,7 @@ package mcts
 
 import util.Util
 
-/**
-  * Upper confidence bound applied to trees (UCT). Given child node v_i of a node
-  * v, the UCT is computed as
-  *
-  * UCT(v_i, v) = Q(v_i) / N(v_i) + c sqrt(log(N(v)) / N(v_i))
-  *
-  * where Q(v_i) is the total simulation reward of v_i, N(v_i) is the number of
-  * times v_i was visited, and c is the parameter that weights the second component,
-  * or the exploration component. The first component Q(v_i) / N(v_i) is the exploitation
-  * component.
-  *
-  * Note that
-  * 1. N(v_i) = 0 results in UCT equal to infinity, so that all child nodes must be
-  * expanded,
-  * 2. Q(v_i) / N(v_i) must lie within [0, 1].
-  */
-object UCT {
+object Thompson {
   def search(rootState: GameState,
              maxIterations: Int,
              verbose: Boolean = false): Int = {
@@ -34,7 +18,7 @@ object UCT {
       // ------------------------------------------------------
       while (node.untriedActions.nonEmpty && node.children.nonEmpty) {
         // Node has no unexplored actions and node has children nodes.
-        node = node.selectChild()
+        node = node.selectChild(thompsonSample = true)
         state.doAction(node.action)
       }
 
